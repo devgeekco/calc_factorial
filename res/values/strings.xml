@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Calculate Factorial</string>
+    <string name="app_name">Calculate Factorial!</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Calculate\nLarge\nFactorial!</string>
-       <string name="calc_button">Calculate</string>
+       <string name="calc_button">Calculate!</string>
 
 </resources>
