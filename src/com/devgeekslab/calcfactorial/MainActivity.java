@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -12,12 +12,17 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * 
+ * @author Ankit Singh
+ * @copyright DevGeeksLab 2014
+ * Refer License in the projects folder for terms and condition
+ * to use this Android application.
+ */
 public class MainActivity extends Activity {
-
+	private static final int REQUEST_CODE = 10;
 	private final String LOG_TAG = "CalcLargeFacts";
 
 	EditText factInput;
@@ -25,8 +30,10 @@ public class MainActivity extends Activity {
 	ProgressDialog progressDialog = null;
 
 	protected long inpLong;
+	protected static int[] factResult;
 
-	private native int[] getFactorial( long input);
+	// native function declaration
+	private native int[] getFactorial(long input);
 
 	static {
 		System.loadLibrary("facto");
@@ -76,8 +83,17 @@ public class MainActivity extends Activity {
 					Toast.makeText(getApplicationContext(), "Oopss! Need Input to find Factorial!", Toast.LENGTH_SHORT).show();
 			}
 		});
-
 	}
+	
+	protected void switchToResult(long time){
+		Intent i = new Intent(this, ResultActivity.class);
+		i.putExtra("time", time);
+		
+		// Set the request code to any code you like, you can identify the
+		// callback via this code
+		startActivityForResult(i, REQUEST_CODE);
+	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -86,8 +102,12 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
+	/**
+	 * Async Task for executing NATIVE C code for finding Factorial
+	 */
 	class ExecuteFactCalc extends AsyncTask<Void, Void, Void> {
-		int[] factResult;
+		long startTime;
+		long endTime;
 
 		@Override
 		protected void onPreExecute() {
@@ -107,11 +127,13 @@ public class MainActivity extends Activity {
 
 		@Override
 		protected Void doInBackground(Void... nothing) {
+			startTime = System.currentTimeMillis();
 			try {
 				factResult =  getFactorial(inpLong);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			endTime = System.currentTimeMillis();
 			return null;
 		}
 
@@ -119,22 +141,15 @@ public class MainActivity extends Activity {
 		protected void onPostExecute(Void nothing) {
 			if (progressDialog !=null) {
 				progressDialog.dismiss();
-				int temp=0;
-				for(int i=factResult.length-1;i>=0;i--){
-
-					if((factResult[i]!=0) || (temp!=0)){
-						System.out.println(factResult[i]);
-						temp=1;
-					}
-				}
-				
+				long duration = endTime - startTime;
+				System.out.println("Time Taken: "+duration);
+				switchToResult(duration);
 			}
 		}
 		
 		private ProgressDialog callProgressDialog(String first, String second) {
 			return ProgressDialog.show(MainActivity.this, first,second, true);
 		}
-
 	};
 }
 
