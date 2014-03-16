@@ -1,7 +1,11 @@
 /**********************************************************************************
-   Adapted Large Factorial C program into JNI format for Android application
-   @Author Ankit Singh, 2014
-   @copyright DevGeeks Lab
+   Adapted Large Factorial C program into JNI format for Android application.
+   Original Source:
+   https://github.com/iankits/my_random_projects/tree/master/big_factorial_prog
+
+   @Author Ankit Singh
+   @copyright DevGeeks Lab, 2014
+   The license of the project comes with code.
  **********************************************************************************/
 #include <jni.h>
 #include <android/log.h>
@@ -12,8 +16,16 @@
 jintArray a[max];
 jlong no;
 
+typedef struct resultCont {
+	jintArray result;
+	jlong size;
+} resCont;
+
 JNIEXPORT jintArray JNICALL Java_com_devgeekslab_calcfactorial_MainActivity_getFactorial(JNIEnv *pEnv, jobject pObj, jlong input) {
 	memset(a, 0, max*sizeof(*a));
+	jintArray result;
+	result = (*pEnv)->NewIntArray(pEnv, max);
+
 	long temp=0, len,s,i,t,j,r,q, prev_len,len_index;
 	a[0]= (jint) 1;
 
@@ -44,8 +56,7 @@ JNIEXPORT jintArray JNICALL Java_com_devgeekslab_calcfactorial_MainActivity_getF
 			if((a[s]!=0)|| (temp!=0)){
 				len++;
 				// DEBUG
-				//printf("\ni=%ld, s=%ld, prev_len=%ld, len=%ld",i,s,prev_len,len);
-		//		__android_log_print(ANDROID_LOG_INFO, LOG_TAG, "i=%ld, s=%ld, prev_len=%ld, len=%ld",i,s,prev_len,len);
+				//		__android_log_print(ANDROID_LOG_INFO, LOG_TAG, "i=%ld, s=%ld, prev_len=%ld, len=%ld",i,s,prev_len,len);
 				prev_len = len;
 				temp=1;
 			}
@@ -69,25 +80,21 @@ JNIEXPORT jintArray JNICALL Java_com_devgeekslab_calcfactorial_MainActivity_getF
 			q=(jint)t/10;
 
 			a[j]=r; //inserting the value into the array
-
-			// DEBUG
-			//      printf("\n\tj=%ld, t(a[j]*i+q)=%ld, r(t%%10)=%ld, q(t/10)=%ld a[%ld]=%d",j,t,r,q,j,a[j]);
 		}
 	}
 
 	__android_log_print(ANDROID_LOG_INFO, LOG_TAG, "Final Factorial Result length %ld", prev_len);
 	// Print the Calculated Factorial
-	temp=0;
-	// printf("\nFactorial --> ");
+	/*temp=0;
 	for(i=prev_len;i>=0;i--){
 		if((a[i]!=0) || (temp!=0)){
 			__android_log_print(ANDROID_LOG_INFO, LOG_TAG, "%d", (jint) a[i]);
-			// printf("%d", a[i]);
 			temp=1;
 		}
-	}
-	//printf("\n"); */
-	return a;
-	//return 0;
+	}*/
+
+	// move from the temp structure to the java structure
+	(*pEnv)->SetIntArrayRegion(pEnv, result, 0, prev_len, a);
+	return result; // Return factorial as a result
 }
 
