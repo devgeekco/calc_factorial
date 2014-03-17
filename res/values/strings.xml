@@ -6,7 +6,8 @@
     <string name="hello_world">Calculate\nLarge\nFactorial!</string>
     <string name="calc_button">Calculate!</string>
     <string name="title_activity_result">Factorial Result</string>
-    <string name="dummy_button">Back</string>
+    <string name="dummy_button">Show Full Result</string>
     <string name="dummy_content">FACTORIAL\nRESULT</string>
+    <string name="textView">Large Factorial Result</string>
 
 </resources>

@@ -72,12 +72,19 @@ public class MainActivity extends Activity {
 				if(!userInput.isEmpty()) {
 					inpLong = Long.parseLong(userInput);
 					Log.i(LOG_TAG, "Input From User: "+inpLong);
-					if(inpLong < 100000)
+					if(inpLong < 55555)
 						new ExecuteFactCalc().execute();
-					else {	
-						Toast.makeText(getApplicationContext(), "STOP!!!! DANGER!!!\nYou wanna fry your device! We support upto " +
-						"factorial of 999999 but not on your device! \n Please Try again !!! :-/", Toast.LENGTH_LONG).show();
-					}
+					else if (inpLong >= 55555 && inpLong < 99999 ) {	
+						Toast.makeText(getApplicationContext(), "STOP!!!! DANGER!!!\nYou wanna fry your device??? We gladly support upto " +
+						"factorial upto '999999' but not on your device! \nSorry but please try again with smaller number!!! :-/", Toast.LENGTH_LONG).show();
+					} else if (inpLong >= 99999 && inpLong < 999999 ) {  
+						Toast.makeText(getApplicationContext(),"Ooopppss!! \n" +
+								"We gladly support upto factorial upto '999999' but not on your device And won't allow for your convenience!" +
+								"\nSorry but please try again with smaller number!!! :-/", Toast.LENGTH_LONG).show();
+					} else
+						Toast.makeText(getApplicationContext(),"Ooochhh!! \n" +
+								"Seriously, You wanna try all limits??? The number '"+inpLong+"' is insanely big and won't allow for your convenience!" +
+								"\nSorry but please try again with smaller number!!! :-/", Toast.LENGTH_LONG).show();
 				} else
 					Toast.makeText(getApplicationContext(), "Oopss! Need Input to find Factorial!", Toast.LENGTH_LONG).show();
 			}
@@ -135,7 +142,8 @@ public class MainActivity extends Activity {
 			else if(inpLong > 9999 && inpLong <= 12000)
 				progressDialog= callProgressDialog("Executing! Please wait!","Wow!! Seems you want to Benchmark your device!! ;-D");
 			else if(inpLong>12000 && inpLong <=99999)
-				progressDialog= callProgressDialog("Yup! We can do it! ;-)","Wooohoo!! Get some coffee & snacks. \nIt will take a while..... ;-D");
+				progressDialog= callProgressDialog("Yup! We can do it! ;-)","Wooohoo!! Get some coffee & snacks." +
+						"\nIt will take a while.....\nHINT: May be more than a minute..... ;-D");
 			else {
 				progressDialog= callProgressDialog("STOP!!!! DANGER!!!","You wanna fry your device! We support upto " +
 				"factorial of 999999 but not on your device! :-/");
