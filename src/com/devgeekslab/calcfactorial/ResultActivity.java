@@ -65,7 +65,7 @@ public class ResultActivity extends Activity {
 		TextView t = new TextView(this); 
 
 	    t=(TextView) findViewById(R.id.fullscreen_content); 
-	    t.setText("Time Taken: "+time+ " ms");
+	    t.setText("Time Taken: "+time+ " ms\n"+ ((double)time/(double)1000) +" sec");
 		
 		int temp=0;
 		for(int i=MainActivity.factResult.length-1;i>=0;i--){

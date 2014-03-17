@@ -41,7 +41,8 @@ public class MainActivity extends Activity {
 
 	// native function declaration
 	private native int[] getFactorial(long input);
-
+	
+	// loading facto library
 	static {
 		System.loadLibrary("facto");
 	}
@@ -61,7 +62,8 @@ public class MainActivity extends Activity {
 			public void beforeTextChanged(CharSequence s, int start, int count, int after){}
 			public void onTextChanged(CharSequence s, int start, int before, int count){}
 		}); 
-
+		
+		// When calculate button pressed
 		calcFactButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				String userInput = factInput.getText().toString();
@@ -69,33 +71,36 @@ public class MainActivity extends Activity {
 				if(!userInput.isEmpty()) {
 					inpLong = Long.parseLong(userInput);
 					Log.i(LOG_TAG, "Input From User: "+inpLong);
-					new ExecuteFactCalc().execute();
-					//StringBuilder strBuilder = new StringBuilder();
-					/*int[] factResult =  getFactorial(inpLong);
-					System.out.println("Length:: "+factResult.length);
-					// strBuilder.append("UserInput: ").append(getFactorial((long) inpLong)).append(System.getProperty("line.separator"));
-					int temp=0;
-					for(int i=factResult.length-1;i>=0;i--){
-
-						if((factResult[i]!=0) || (temp!=0)){
-							System.out.println(factResult[i]);
-							temp=1;
-						}
-					}*/
-					//executeFactorialCalc(inpLong); // do in background
-
-					// TextView tv = (TextView) findViewById(R.id.textView1);
-					// tv.setText(strBuilder.toString());
+					if(inpLong < 100000)
+						new ExecuteFactCalc().execute();
+					else {	
+						Toast.makeText(getApplicationContext(), "STOP!!!! DANGER!!!\nYou wanna fry your device! We support upto " +
+						"factorial of 999999 but not on your device! \n Please Try again !!! :-/", Toast.LENGTH_LONG).show();
+					}
 				} else
-					Toast.makeText(getApplicationContext(), "Oopss! Need Input to find Factorial!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Oopss! Need Input to find Factorial!", Toast.LENGTH_LONG).show();
 			}
 		});
 	}
 	
+	/**
+	 *  ProgressDialog common call with different message
+	 * @param firstString
+	 * @param secondString
+	 * @return
+	 */
+	protected ProgressDialog callProgressDialog(String firstString, String secondString) {
+		return ProgressDialog.show(MainActivity.this, firstString, secondString, true);
+	}
+	
+	/**
+	 * Switching to Result activity for displaying result.
+	 * @param time
+	 */
 	protected void switchToResult(long time){
 		Intent i = new Intent(this, ResultActivity.class);
 		i.putExtra("time", time);
-		
+
 		// Set the request code to any code you like, you can identify the
 		// callback via this code
 		startActivityForResult(i, REQUEST_CODE);
@@ -120,23 +125,25 @@ public class MainActivity extends Activity {
 		protected void onPreExecute() {
 			if (inpLong <= 1200)
 				progressDialog= callProgressDialog("Executing!","Common! Try me. I can do better! :-D");
-		else if(inpLong > 1200 && inpLong <= 5000)
+			else if(inpLong > 1200 && inpLong <= 5000)
 				progressDialog= callProgressDialog("Executing! Please wait!","OK! you are warming up! :-)");
 			else if (inpLong >5000 && inpLong <= 9999)
 				progressDialog= callProgressDialog("Executing! Please wait!","Woohoo!! You are taking this seriously! ;-)");
 			else if(inpLong > 9999 && inpLong <= 12000)
 				progressDialog= callProgressDialog("Executing! Please wait!","Wow!! Seems you want to Benchmark your device!! ;-D");
 			else if(inpLong>12000 && inpLong <=99999)
-				progressDialog= callProgressDialog("Seriously!!! :-|","Woooopp!! Get some coffee & snacks. It will take a while..... ;-D");
-			else
-				progressDialog= callProgressDialog("STOP!!!! DANGER!!!","You wanna fry your device! :-/");
+				progressDialog= callProgressDialog("Yup! We can do it! ;-)","Wooohoo!! Get some coffee & snacks. \nIt will take a while..... ;-D");
+			else {
+				progressDialog= callProgressDialog("STOP!!!! DANGER!!!","You wanna fry your device! We support upto " +
+				"factorial of 999999 but not on your device! :-/");
+			}
 		}
 
 		@Override
 		protected Void doInBackground(Void... nothing) {
 			startTime = System.currentTimeMillis();
 			try {
-				factResult =  getFactorial(inpLong);
+				factResult =  getFactorial(inpLong); // Calling native library for processing Factorial calculation
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -150,13 +157,10 @@ public class MainActivity extends Activity {
 				progressDialog.dismiss();
 				long duration = endTime - startTime;
 				System.out.println("Time Taken: "+duration);
-				switchToResult(duration);
+				switchToResult(duration); 
 			}
 		}
-		
-		private ProgressDialog callProgressDialog(String first, String second) {
-			return ProgressDialog.show(MainActivity.this, first,second, true);
-		}
+
 	};
 }
 

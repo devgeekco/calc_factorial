@@ -93,8 +93,9 @@ JNIEXPORT jintArray JNICALL Java_com_devgeekslab_calcfactorial_MainActivity_getF
 		}
 	}*/
 
-	// move from the temp structure to the java structure
+	// move from the a structure to the java structure
 	(*pEnv)->SetIntArrayRegion(pEnv, result, 0, prev_len, a);
+	(*pEnv)->DeleteLocalRef(pEnv, a);
 	return result; // Return factorial as a result
 }
 
