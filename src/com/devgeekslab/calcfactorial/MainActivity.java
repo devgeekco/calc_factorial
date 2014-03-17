@@ -21,9 +21,6 @@ import android.widget.Toast;
  * Refer License in the projects folder for terms and condition
  * to use this Android application.
  * 
- * @TODO: Send and recieve STRUCT between native and java android i.e. factorial array,
- * maximum result length etc.
- * @TODO: find a way to include result array in ResultActivity.
  * @TODO: About me activiy class
  * @TODO: add way to show different fun-facts about factorial.
  * @TODO: find best advertisement payment subscriber. 

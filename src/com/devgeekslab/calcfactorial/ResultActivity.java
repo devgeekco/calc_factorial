@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -158,11 +159,10 @@ public class ResultActivity extends Activity {
 			@Override
 			public void onClick(View view) {
 				if (TOGGLE_ON_CLICK) {
-					System.out.println("onClick 130");
-
+					setContentView(R.layout.show_factorial);
+					showResultInLayout();
 					mSystemUiHider.toggle();
 				} else {
-					System.out.println("onClick show 133");
 					mSystemUiHider.show();
 				}
 			}
@@ -191,8 +191,6 @@ public class ResultActivity extends Activity {
 			}
 		}
 		tv.setText(factStr);
-
-
 	}
 
 	@Override
