@@ -9,9 +9,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -39,7 +42,7 @@ public class MainActivity extends Activity {
 	// native function declaration
 	private native int[] getFactorial(long input);
 	private native long getSize();
-	
+
 	// loading facto library
 	static {
 		System.loadLibrary("facto");
@@ -60,7 +63,7 @@ public class MainActivity extends Activity {
 			public void beforeTextChanged(CharSequence s, int start, int count, int after){}
 			public void onTextChanged(CharSequence s, int start, int before, int count){}
 		}); 
-		
+
 		// When calculate button pressed
 		calcFactButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -73,7 +76,7 @@ public class MainActivity extends Activity {
 						new ExecuteFactCalc().execute();
 					else if (inpLong >= 55555 && inpLong < 99999 ) {	
 						Toast.makeText(getApplicationContext(), "STOP!!!! DANGER!!!\nYou wanna fry your device??? We gladly support upto " +
-						"factorial upto '999999' but not on your device! \nSorry but please try again with smaller number!!! :-/", Toast.LENGTH_LONG).show();
+								"factorial upto '999999' but not on your device! \nSorry but please try again with smaller number!!! :-/", Toast.LENGTH_LONG).show();
 					} else if (inpLong >= 99999 && inpLong < 999999 ) {  
 						Toast.makeText(getApplicationContext(),"Ooopppss!! \n" +
 								"We gladly support upto factorial upto '999999' but not on your device And won't allow for your convenience!" +
@@ -87,7 +90,7 @@ public class MainActivity extends Activity {
 			}
 		});
 	}
-	
+
 	/**
 	 *  ProgressDialog common call with different message
 	 * @param firstString
@@ -97,7 +100,7 @@ public class MainActivity extends Activity {
 	protected ProgressDialog callProgressDialog(String firstString, String secondString) {
 		return ProgressDialog.show(MainActivity.this, firstString, secondString, true);
 	}
-	
+
 	/**
 	 * Switching to Result activity for displaying result.
 	 * @param time
@@ -120,6 +123,25 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.item1:
+			Toast.makeText(this, "You selected the FACTORIAL option", Toast.LENGTH_SHORT).show();
+			break;
+		case R.id.item2:
+			Toast.makeText(this, "You selected the ABOUT option", Toast.LENGTH_SHORT).show();
+			break;
+		case R.id.item3:
+			Toast.makeText(this, "You selected the ALGO option", Toast.LENGTH_SHORT).show();
+			break;
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+
 	/**
 	 * Async Task for executing NATIVE C code for finding Factorial
 	 */
@@ -140,7 +162,7 @@ public class MainActivity extends Activity {
 				progressDialog= callProgressDialog("Executing! Please wait!","Wow!! Seems you want to Benchmark your device!! ;-D");
 			else if(inpLong>12000 && inpLong <=99999)
 				progressDialog= callProgressDialog("Yup! We can do it! ;-)","Wooohoo!! Get some coffee & snacks." +
-						"\nIt will take a while.....\nHINT: May be more than a minute..... ;-D");
+				"\nIt will take a while.....\nHINT: May be more than a minute..... ;-D");
 			else {
 				progressDialog= callProgressDialog("STOP!!!! DANGER!!!","You wanna fry your device! We support upto " +
 				"factorial of 999999 but not on your device! :-/");

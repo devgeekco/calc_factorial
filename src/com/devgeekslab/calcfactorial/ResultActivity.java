@@ -4,6 +4,8 @@ import com.devgeekslab.calcfactorial.util.SystemUiHider;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -55,6 +57,8 @@ public class ResultActivity extends Activity {
 
 	Button showResultButton;
 	long time, size;
+	String factStr;
+	ProgressDialog progressDialog = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -179,18 +183,7 @@ public class ResultActivity extends Activity {
 	 * Showing the big factorial result in the layout.
 	 */
 	private void showResultInLayout() {
-		
-		TextView tv = (TextView) findViewById(R.id.textViewResult);
-		
-		String factStr = "";
-		int temp=0;
-		for(long i=size;i>=0;i--){
-			if((MainActivity.factResult[(int)i]!=0) || (temp!=0)){
-				factStr += MainActivity.factResult[(int)i];
-				temp=1;
-			}
-		}
-		tv.setText(factStr);
+		new bigFactPrint().execute();
 	}
 
 	@Override
@@ -233,4 +226,49 @@ public class ResultActivity extends Activity {
 		mHideHandler.removeCallbacks(mHideRunnable);
 		mHideHandler.postDelayed(mHideRunnable, delayMillis);
 	}
+	
+	/**
+	 *  ProgressDialog common call with different message
+	 * @param firstString
+	 * @param secondString
+	 * @return
+	 */
+	protected ProgressDialog callProgressDialog(String firstString, String secondString) {
+		return ProgressDialog.show(ResultActivity.this, firstString, secondString, true);
+	}
+	
+	class bigFactPrint extends AsyncTask<Void, Void, Void> {
+		
+		@Override
+		protected void onPreExecute() {
+			progressDialog= callProgressDialog("Processing....","Printing HUGE number will take sometime!");
+		}
+
+		@Override
+		protected Void doInBackground(Void... arg0) {
+			factStr = "";
+			int temp=0;
+			for(long i=size;i>=0;i--){
+				if((MainActivity.factResult[(int)i]!=0) || (temp!=0)){
+					factStr += MainActivity.factResult[(int)i];
+					temp=1;
+				}
+			}
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void nothing) {
+			if (progressDialog !=null) {
+				progressDialog.dismiss();
+				TextView tv = (TextView) findViewById(R.id.textViewResult);
+				tv.setText(factStr);
+			}
+		}
+		
+		
+		
+		
+		
+	};
 }
