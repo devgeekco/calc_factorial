@@ -58,6 +58,7 @@ public class ResultActivity extends Activity {
 			return;
 		}
 		long time = extras.getLong("time");
+		long size = extras.getLong("size");
 		
 		final View controlsView = findViewById(R.id.fullscreen_content_controls);
 		final View contentView = findViewById(R.id.fullscreen_content);
@@ -65,13 +66,13 @@ public class ResultActivity extends Activity {
 		TextView t = new TextView(this); 
 
 	    t=(TextView) findViewById(R.id.fullscreen_content); 
-	    t.setText("Time Taken: "+time+ " ms\n"+ ((double)time/(double)1000) +" sec");
+	    t.setText("Result Size:"+ size+"\nTime Taken: "+time+ " ms\n"+ ((double)time/(double)1000) +" sec");
 		
 		int temp=0;
-		for(int i=MainActivity.factResult.length-1;i>=0;i--){
+		for(long i=size+2;i>=0;i--){
 
-			if((MainActivity.factResult[i]!=0) || (temp!=0)){
-				System.out.println(MainActivity.factResult[i]);
+			if((MainActivity.factResult[(int)i]!=0) || (temp!=0)){
+				System.out.println(MainActivity.factResult[(int)i]);
 				temp=1;
 			}
 		}

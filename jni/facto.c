@@ -14,19 +14,24 @@
 #define LOG_TAG "factoLib"
 
 jintArray a[max];
-jlong no;
+jlong no, prev_len;
 
 typedef struct resultCont {
 	jintArray result;
 	jlong size;
 } resCont;
 
+JNIEXPORT jlong JNICALL Java_com_devgeekslab_calcfactorial_MainActivity_getSize(JNIEnv *pEnv, jobject pObj) {
+	__android_log_print(ANDROID_LOG_INFO, LOG_TAG, "Returning:: %ld", prev_len);
+	return prev_len;
+}
+
 JNIEXPORT jintArray JNICALL Java_com_devgeekslab_calcfactorial_MainActivity_getFactorial(JNIEnv *pEnv, jobject pObj, jlong input) {
 	memset(a, 0, max*sizeof(*a));
 	jintArray result;
 	result = (*pEnv)->NewIntArray(pEnv, max);
 
-	long temp=0, len,s,i,t,j,r,q, prev_len,len_index;
+	long temp=0, len,s,i,t,j,r,q,len_index;
 	a[0]= (jint) 1;
 
 	__android_log_print(ANDROID_LOG_INFO, LOG_TAG, "To Find factorial of %jd", input);

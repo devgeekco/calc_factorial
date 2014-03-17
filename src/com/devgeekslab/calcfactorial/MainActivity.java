@@ -41,6 +41,7 @@ public class MainActivity extends Activity {
 
 	// native function declaration
 	private native int[] getFactorial(long input);
+	private native long getSize();
 	
 	// loading facto library
 	static {
@@ -97,9 +98,10 @@ public class MainActivity extends Activity {
 	 * Switching to Result activity for displaying result.
 	 * @param time
 	 */
-	protected void switchToResult(long time){
+	protected void switchToResult(long time, long size){
 		Intent i = new Intent(this, ResultActivity.class);
 		i.putExtra("time", time);
+		i.putExtra("size", size);
 
 		// Set the request code to any code you like, you can identify the
 		// callback via this code
@@ -120,6 +122,7 @@ public class MainActivity extends Activity {
 	class ExecuteFactCalc extends AsyncTask<Void, Void, Void> {
 		long startTime;
 		long endTime;
+		long size;
 
 		@Override
 		protected void onPreExecute() {
@@ -144,6 +147,7 @@ public class MainActivity extends Activity {
 			startTime = System.currentTimeMillis();
 			try {
 				factResult =  getFactorial(inpLong); // Calling native library for processing Factorial calculation
+				size = getSize();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -157,7 +161,8 @@ public class MainActivity extends Activity {
 				progressDialog.dismiss();
 				long duration = endTime - startTime;
 				System.out.println("Time Taken: "+duration);
-				switchToResult(duration); 
+				System.out.println("Size: "+size);
+				switchToResult(duration, size); 
 			}
 		}
 
