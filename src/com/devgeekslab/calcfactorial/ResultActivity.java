@@ -91,17 +91,17 @@ public class ResultActivity extends Activity {
 				tempFact += MainActivity.factResult[(int)i];
 				count += 1;
 				temp=1;
-				if(count > 13)
+				if(count > 29)
 					break;
 			}
 		}
 
 		t=(TextView) findViewById(R.id.fullscreen_content); 
-		if(tempFact.length() > 13)
-			t.setText("Result Size: "+(size+1)+"\nTime: "+time+ " ms\n"+ ((double)time/(double)1000) +" sec\n" +
+		if(tempFact.length() > 29)
+			t.setText("Result Size: "+(size-5)+"\nTime: "+time+ " ms\n"+ ((double)time/(double)1000) +" sec\n" +
 					"\nFactorial --> \n"+tempFact+"...\n\nDouble Tap to See Full Factorial");
 		else
-			t.setText("Result Size: "+(size+1)+"\nTime: "+time+ " ms\n"+ ((double)time/(double)1000) +" sec\n" +
+			t.setText("Result Size: "+(size-5)+"\nTime: "+time+ " ms\n"+ ((double)time/(double)1000) +" sec\n" +
 					"\nFactorial --> \n"+tempFact);
 
 		showResultButton.setEnabled(true);
@@ -183,7 +183,19 @@ public class ResultActivity extends Activity {
 	 * Showing the big factorial result in the layout.
 	 */
 	private void showResultInLayout() {
-		new bigFactPrint().execute();
+		TextView tv = (TextView) findViewById(R.id.textViewResult);
+		tv.setText("");
+		factStr = "";
+		int temp=0;
+		for(long i=size;i>=0;i--){
+			if((MainActivity.factResult[(int)i]!=0) || (temp!=0)){
+				factStr += MainActivity.factResult[(int)i];
+				tv.append(factStr);
+				factStr="";
+				temp=1;
+			}
+		}
+		//new bigFactPrint().execute();
 	}
 
 	@Override
@@ -238,7 +250,7 @@ public class ResultActivity extends Activity {
 	}
 	
 	class bigFactPrint extends AsyncTask<Void, Void, Void> {
-		
+		TextView tv = (TextView) findViewById(R.id.textViewResult);
 		@Override
 		protected void onPreExecute() {
 			progressDialog= callProgressDialog("Processing....","Printing HUGE number will take sometime!");
@@ -261,7 +273,7 @@ public class ResultActivity extends Activity {
 		protected void onPostExecute(Void nothing) {
 			if (progressDialog !=null) {
 				progressDialog.dismiss();
-				TextView tv = (TextView) findViewById(R.id.textViewResult);
+			//	TextView tv = (TextView) findViewById(R.id.textViewResult);
 				tv.setText(factStr);
 			}
 		}

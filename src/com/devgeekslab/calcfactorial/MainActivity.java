@@ -3,7 +3,6 @@ package com.devgeekslab.calcfactorial;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.text.Editable;
@@ -11,12 +10,9 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +23,7 @@ import android.widget.Toast;
  * Refer License in the projects folder for terms and condition
  * to use this Android application.
  * 
- * @TODO: About me activiy class
+ * @TODO: About me activity class
  * @TODO: add way to show different fun-facts about factorial.
  * @TODO: find best advertisement payment subscriber. 
  */
@@ -37,6 +33,7 @@ public class MainActivity extends Activity {
 
 	EditText factInput;
 	Button calcFactButton;
+	TextView tv;
 	ProgressDialog progressDialog = null;
 
 	protected long inpLong;
@@ -58,6 +55,13 @@ public class MainActivity extends Activity {
 
 		factInput = (EditText) findViewById(R.id.inputNumber);
 		calcFactButton = (Button) findViewById(R.id.calcFact);
+		TextView tv = (TextView) findViewById(R.id.textView1); 
+		
+		tv.setText("The factorial function (symbol: !) means to multiply a series of descending natural numbers.\n\nExamples:\n" +
+					"* 4! = 4 × 3 × 2 × 1 = 24 \n" +
+					"* 7! = 7 × 6 × 5 × 4 × 3 × 2 × 1 = 5040\n" +
+					"* 1! = 1\n" + 
+					"* 0! = 1 (Zero Factorial is interesting... it is generally agreed that 0! = 1)");
 
 		factInput.addTextChangedListener(new TextWatcher(){
 			public void afterTextChanged(Editable s) {
