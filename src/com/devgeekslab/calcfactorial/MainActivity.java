@@ -133,17 +133,12 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.item1:
-			Toast.makeText(this, "The factorial function (symbol: !) means to multiply a series of descending natural numbers. Examples:\n " +
-					"4! = 4 × 3 × 2 × 1 = 24 \n" +
-					"7! = 7 × 6 × 5 × 4 × 3 × 2 × 1 = 5040\n" +
-					"1! = 1", Toast.LENGTH_LONG).show();
-			break;
 		case R.id.item2:
 			Toast.makeText(this, "Developed by Ankit Singh, DevGeeks Lab (http://devgeek.co)", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.item3:
-			Toast.makeText(this, "The algorithm is implemented in C and called using JNI", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "The algorithm is implemented in C and called using JNI. Please refer " +
+					"\nhttp://blog.devgeek.co for more details.", Toast.LENGTH_SHORT).show();
 			break;
 		default:
 			break;

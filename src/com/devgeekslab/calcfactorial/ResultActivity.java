@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -91,15 +92,15 @@ public class ResultActivity extends Activity {
 				tempFact += MainActivity.factResult[(int)i];
 				count += 1;
 				temp=1;
-				if(count > 29)
+				if(count > 99)
 					break;
 			}
 		}
 
 		t=(TextView) findViewById(R.id.fullscreen_content); 
-		if(tempFact.length() > 29)
+		if(tempFact.length() > 99)
 			t.setText("Result Size: "+(size-5)+"\nTime: "+time+ " ms\n"+ ((double)time/(double)1000) +" sec\n" +
-					"\nFactorial --> \n"+tempFact+"...\n\nDouble Tap to See Full Factorial");
+					"\nFactorial --> \n"+tempFact+".....\n\nDouble Tap to See Full Factorial");
 		else
 			t.setText("Result Size: "+(size-5)+"\nTime: "+time+ " ms\n"+ ((double)time/(double)1000) +" sec\n" +
 					"\nFactorial --> \n"+tempFact);
@@ -108,6 +109,8 @@ public class ResultActivity extends Activity {
 
 		showResultButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+				if(size >5999)
+					Toast.makeText(getApplicationContext(), "Processing... Please Wait!", Toast.LENGTH_SHORT).show();
 				setContentView(R.layout.show_factorial);
 				showResultInLayout();
 			}
@@ -163,6 +166,8 @@ public class ResultActivity extends Activity {
 			@Override
 			public void onClick(View view) {
 				if (TOGGLE_ON_CLICK) {
+					if(size >5999)
+						Toast.makeText(getApplicationContext(), "Processing... Please Wait!", Toast.LENGTH_SHORT).show();
 					setContentView(R.layout.show_factorial);
 					showResultInLayout();
 					mSystemUiHider.toggle();
