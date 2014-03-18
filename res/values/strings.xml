@@ -11,5 +11,9 @@
     <string name="dummy_button">Show Full Result</string>
     <string name="dummy_content">FACTORIAL\nRESULT</string>
     <string name="textView">Large Factorial Result</string>
+    
+    <string name="dia_button">OK! Nice to Know!</string>
+    <string name="desc">image</string>
+    
 
 </resources>

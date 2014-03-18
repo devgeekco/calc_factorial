@@ -3,6 +3,7 @@ package com.devgeekslab.calcfactorial;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.text.Editable;
@@ -12,8 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +45,7 @@ public class MainActivity extends Activity {
 	// native function declaration
 	private native int[] getFactorial(long input);
 	private native long getSize();
-
+	
 	// loading facto library
 	static {
 		System.loadLibrary("facto");
@@ -72,9 +75,9 @@ public class MainActivity extends Activity {
 				if(!userInput.isEmpty()) {
 					inpLong = Long.parseLong(userInput);
 					Log.i(LOG_TAG, "Input From User: "+inpLong);
-					if(inpLong < 55555)
+					if(inpLong <= 55555)
 						new ExecuteFactCalc().execute();
-					else if (inpLong >= 55555 && inpLong < 99999 ) {	
+					else if (inpLong > 55555 && inpLong < 99999 ) {	
 						Toast.makeText(getApplicationContext(), "STOP!!!! DANGER!!!\nYou wanna fry your device??? We gladly support upto " +
 								"factorial upto '999999' but not on your device! \nSorry but please try again with smaller number!!! :-/", Toast.LENGTH_LONG).show();
 					} else if (inpLong >= 99999 && inpLong < 999999 ) {  
@@ -127,13 +130,16 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.item1:
-			Toast.makeText(this, "You selected the FACTORIAL option", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "The factorial function (symbol: !) means to multiply a series of descending natural numbers. Examples:\n " +
+					"4! = 4 × 3 × 2 × 1 = 24 \n" +
+					"7! = 7 × 6 × 5 × 4 × 3 × 2 × 1 = 5040\n" +
+					"1! = 1", Toast.LENGTH_LONG).show();
 			break;
 		case R.id.item2:
-			Toast.makeText(this, "You selected the ABOUT option", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Developed by Ankit Singh, DevGeeks Lab (http://devgeek.co)", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.item3:
-			Toast.makeText(this, "You selected the ALGO option", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "The algorithm is implemented in C and called using JNI", Toast.LENGTH_SHORT).show();
 			break;
 		default:
 			break;
