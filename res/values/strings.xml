@@ -14,6 +14,7 @@
     
     <string name="dia_button">OK! Nice to Know!</string>
     <string name="desc">image</string>
+    <string name="diaText">Dialog Text</string>
     
 
 </resources>

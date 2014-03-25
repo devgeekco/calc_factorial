@@ -3,6 +3,7 @@ package com.devgeekslab.calcfactorial;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.text.Editable;
@@ -35,6 +36,8 @@ public class MainActivity extends Activity {
 	Button calcFactButton;
 	TextView tv;
 	ProgressDialog progressDialog = null;
+	CustomDialog cd;
+
 
 	protected long inpLong;
 	protected static int[] factResult;
@@ -134,11 +137,24 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.item2:
-			Toast.makeText(this, "Developed by Ankit Singh, DevGeeks Lab (http://devgeek.co)", Toast.LENGTH_SHORT).show();
+			cd = new CustomDialog(MainActivity.this, "My first Android Application to be launched in Google Play." +
+					"\n\n The factorial is not calculated using Java's BigInteger but by using Array to store " +
+					"huge result. For more information, see 'Algorithm' in menu.\n\n" +
+					"Developed by,\n " +
+					"Ankit Singh (ankit@devgeek.co)\n\nDevGeeks Lab (http://devgeek.co)");
+			//cd.setDialogText("Developed by Ankit Singh, DevGeeks Lab (http://devgeek.co)");
+			cd.show();
+			//Toast.makeText(this, "Developed by Ankit Singh, DevGeeks Lab (http://devgeek.co)", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.item3:
-			Toast.makeText(this, "The algorithm is implemented in C and called using JNI. Please refer " +
-					"\nhttp://blog.devgeek.co for more details.", Toast.LENGTH_SHORT).show();
+			cd = new CustomDialog(MainActivity.this, "The algorithm for calculating big factorial is implemented in C and called using JNI. " +
+					"Factorial was calculated without using System Precision for storing big value. An array of 999999 is used for " +
+					"processing and storing data. \n\n" +
+					"The algorithm in C and app source can be found in github repository:\n" +
+					"'https://github.com/devgeekco/calc_factorial_app' \n" +
+					"\nHave Fun!!! \n");
+			//Toast.makeText(this, "The algorithm is implemented in C and called using JNI. Please refer " + "\nhttp://blog.devgeek.co for more details.", Toast.LENGTH_SHORT).show();
+			cd.show();
 			break;
 		default:
 			break;
