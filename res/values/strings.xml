@@ -5,16 +5,15 @@
     <string name="factorial">Factorial</string>
     <string name="about">About</string>
     <string name="algo">Algorithm</string>
+    <string name="real">Factorial Facts</string>
     <string name="hello_world">Calculate\nLarge\nFactorial!</string>
     <string name="calc_button">Calculate!</string>
     <string name="title_activity_result">Factorial Result</string>
     <string name="dummy_button">Show Full Result</string>
     <string name="dummy_content">FACTORIAL\nRESULT</string>
     <string name="textView">Large Factorial Result</string>
-    
     <string name="dia_button">OK! Nice to Know!</string>
     <string name="desc">image</string>
     <string name="diaText">Dialog Text</string>
-    
 
 </resources>

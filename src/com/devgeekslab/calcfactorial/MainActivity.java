@@ -143,11 +143,25 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case R.id.item1:
+			cd = new CustomDialog(MainActivity.this, "=Interesting Facts about Factorial=\n\n" +
+					"1. 'Permutations and Combinations' are the very common example where Factorial are used.\n\n" +
+					"2. Used a lot in Probability. For example in dealing cards, as opposed to rolling die. " +
+					"Once you dealed the first card, that card is not a option for a subseqent selection. " +
+					"Thus there are 52*51*50*49*48 hands from a deck. that number is 52!/47!.\n\n" +
+					"3. It is used to calculate polynomial placement and polygon shading in computer graphics. " +
+					"This is most used in games with lots of 3D graphics.\n\n" +
+					"4. Used in Taylor's Theorm (http://en.wikipedia.org/wiki/Taylor's_theorem). In calculus, " +
+					"Taylor's theorem gives an approximation of a k times differentiable function around a given " +
+					"point by a k-th order Taylor polynomial.\n\n" +
+					"5. Factorial are also used in computing very complex statistical distributions like the 't-distribution'.");
+			cd.show();
+			break;
 		case R.id.item2:
 			cd = new CustomDialog(MainActivity.this, "My first Android Application that is launched in Google Play." +
 					"\n\n The factorial is not calculated using Java's BigInteger but by using Array to store " +
 					"huge result. For more information, see 'Algorithm' in menu.\n\n" +
-					"Developed by,\n " +
+					"Developed by,\n\n " +
 			"Ankit Singh (ankit@devgeek.co)\n\nDevGeeks Lab (http://devgeek.co)");
 			cd.show();
 			break;
