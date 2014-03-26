@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
 	// native function declaration
 	private native int[] getFactorial(long input);
 	private native long getSize();
-	
+
 	// loading facto library
 	static {
 		System.loadLibrary("facto");
@@ -59,12 +59,12 @@ public class MainActivity extends Activity {
 		factInput = (EditText) findViewById(R.id.inputNumber);
 		calcFactButton = (Button) findViewById(R.id.calcFact);
 		TextView tv = (TextView) findViewById(R.id.textView1); 
-		
+
 		tv.setText("The factorial function (symbol: !) means to multiply a series of descending natural numbers.\n\nExamples:\n" +
-					"* 4! = 4 × 3 × 2 × 1 = 24 \n" +
-					"* 7! = 7 × 6 × 5 × 4 × 3 × 2 × 1 = 5040\n" +
-					"* 1! = 1\n" + 
-					"* 0! = 1 (Zero Factorial is interesting... it is generally agreed that 0! = 1)");
+				"* 4! = 4 × 3 × 2 × 1 = 24 \n" +
+				"* 7! = 7 × 6 × 5 × 4 × 3 × 2 × 1 = 5040\n" +
+				"* 1! = 1\n" + 
+		"* 0! = 1 (Zero Factorial is interesting... it is generally agreed that 0! = 1)");
 
 		factInput.addTextChangedListener(new TextWatcher(){
 			public void afterTextChanged(Editable s) {
@@ -82,21 +82,28 @@ public class MainActivity extends Activity {
 				if(!userInput.isEmpty()) {
 					inpLong = Long.parseLong(userInput);
 					Log.i(LOG_TAG, "Input From User: "+inpLong);
-					if(inpLong <= 55555)
+					if(inpLong <= 33333)
 						new ExecuteFactCalc().execute();
-					else if (inpLong > 55555 && inpLong < 99999 ) {	
-						Toast.makeText(getApplicationContext(), "STOP!!!! DANGER!!!\nYou wanna fry your device??? We gladly support upto " +
-								"factorial upto '999999' but not on your device! \nSorry but please try again with smaller number!!! :-/", Toast.LENGTH_LONG).show();
+					else if (inpLong > 33333 && inpLong < 99999 ) {	
+						cd = new CustomDialog(MainActivity.this, "STOP!!!! DANGER!!!\n" +
+								"\nYou wanna fry your device??? We gladly support upto " +
+								"factorial upto '999999' but not on your device! \n" +
+						"We restricted calculation of factorial upto '33333'\n\nSorry but please try again with smaller number!!! :-/");
+						cd.show();
 					} else if (inpLong >= 99999 && inpLong < 999999 ) {  
-						Toast.makeText(getApplicationContext(),"Ooopppss!! \n" +
-								"We gladly support upto factorial upto '999999' but not on your device And won't allow for your convenience!" +
-								"\nSorry but please try again with smaller number!!! :-/", Toast.LENGTH_LONG).show();
-					} else
-						Toast.makeText(getApplicationContext(),"Ooochhh!! \n" +
-								"Seriously, You wanna try all limits??? The number '"+inpLong+"' is insanely big and won't allow for your convenience!" +
-								"\nSorry but please try again with smaller number!!! :-/", Toast.LENGTH_LONG).show();
+						cd = new CustomDialog(MainActivity.this, "Ooopppss!!! \n\n" +
+								"We gladly support upto factorial upto '999999' but not on your device And won't allow for your convenience!\n" +
+								"We restricted calculation of factorial upto '33333' \n" +
+						"\nSorry but please try again with smaller number!!! :-/");
+						cd.show();
+					} else {
+						cd = new CustomDialog(MainActivity.this, "Ooochhh!!! Get a Supercomputer! \n\n" +
+								"Seriously, you wanna try all limits??? \n\nThe number '"+inpLong+"' is insanely big and won't allow for your convenience!" +
+						"\n\nSorry but please try again with smaller number!!! :-/");
+						cd.show(); 
+					}
 				} else
-					Toast.makeText(getApplicationContext(), "Oopss! Need Input to find Factorial!", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), "Oopss! Need an Input to find Factorial!", Toast.LENGTH_LONG).show();
 			}
 		});
 	}
@@ -137,23 +144,21 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.item2:
-			cd = new CustomDialog(MainActivity.this, "My first Android Application to be launched in Google Play." +
+			cd = new CustomDialog(MainActivity.this, "My first Android Application that is launched in Google Play." +
 					"\n\n The factorial is not calculated using Java's BigInteger but by using Array to store " +
 					"huge result. For more information, see 'Algorithm' in menu.\n\n" +
 					"Developed by,\n " +
-					"Ankit Singh (ankit@devgeek.co)\n\nDevGeeks Lab (http://devgeek.co)");
-			//cd.setDialogText("Developed by Ankit Singh, DevGeeks Lab (http://devgeek.co)");
+			"Ankit Singh (ankit@devgeek.co)\n\nDevGeeks Lab (http://devgeek.co)");
 			cd.show();
-			//Toast.makeText(this, "Developed by Ankit Singh, DevGeeks Lab (http://devgeek.co)", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.item3:
-			cd = new CustomDialog(MainActivity.this, "The algorithm for calculating big factorial is implemented in C and called using JNI. " +
-					"Factorial was calculated without using System Precision for storing big value. An array of 999999 is used for " +
+			cd = new CustomDialog(MainActivity.this, "The algorithm for calculating big factorial was implemented in C and called using JNI in the Andriod App. " +
+					"The implemented algorithm is not the fastest way to calculate factorial but the beauty of the algorithm is that the " +
+					"factorial was calculated without using 'System Precision' for storing big value. An array of 999999 is used for " +
 					"processing and storing data. \n\n" +
-					"The algorithm in C and app source can be found in github repository:\n" +
-					"'https://github.com/devgeekco/calc_factorial_app' \n" +
-					"\nHave Fun!!! \n");
-			//Toast.makeText(this, "The algorithm is implemented in C and called using JNI. Please refer " + "\nhttp://blog.devgeek.co for more details.", Toast.LENGTH_SHORT).show();
+					"The algorithm in C and app source can be found in github repository:\n\n" +
+					"https://github.com/devgeekco/calc_factorial_app \n" +
+			"\nHave Fun!!!");
 			cd.show();
 			break;
 		default:

@@ -34,7 +34,7 @@ JNIEXPORT jintArray JNICALL Java_com_devgeekslab_calcfactorial_MainActivity_getF
 	long temp=0, len,s,i,t,j,r,q,len_index;
 	a[0]= (jint) 1;
 
-	__android_log_print(ANDROID_LOG_INFO, LOG_TAG, "To Find factorial of %jd", input);
+	//	__android_log_print(ANDROID_LOG_INFO, LOG_TAG, "To Find factorial of %jd", input);
 	no=input;
 	a[0]=1;
 	prev_len = len_index =0;
@@ -88,7 +88,7 @@ JNIEXPORT jintArray JNICALL Java_com_devgeekslab_calcfactorial_MainActivity_getF
 		}
 	}
 
-	__android_log_print(ANDROID_LOG_INFO, LOG_TAG, "Final Factorial Result length %ld", prev_len);
+	//	__android_log_print(ANDROID_LOG_INFO, LOG_TAG, "Final Factorial Result length %ld", prev_len);
 	// Print the Calculated Factorial
 	/*temp=0;
 	for(i=prev_len;i>=0;i--){

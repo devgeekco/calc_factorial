@@ -92,15 +92,15 @@ public class ResultActivity extends Activity {
 				tempFact += MainActivity.factResult[(int)i];
 				count += 1;
 				temp=1;
-				if(count > 99)
+				if(count > 101)
 					break;
 			}
 		}
 
 		t=(TextView) findViewById(R.id.fullscreen_content); 
-		if(tempFact.length() > 99)
+		if(tempFact.length() > 101)
 			t.setText("Result Size: "+(size-5)+"\nTime: "+time+ " ms\n"+ ((double)time/(double)1000) +" sec\n" +
-					"\nFactorial --> \n"+tempFact+".....\n\nDouble Tap to See Full Factorial");
+					"\nFactorial --> \n"+tempFact+"...\n\nDouble Tap to See Full Factorial");
 		else
 			t.setText("Result Size: "+(size-5)+"\nTime: "+time+ " ms\n"+ ((double)time/(double)1000) +" sec\n" +
 					"\nFactorial --> \n"+tempFact);
